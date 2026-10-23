@@ -104,16 +104,16 @@ h1{font-size:28px;font-weight:600;line-height:1.5}.top p{color:var(--mu)}
 </aside>
 <main>
  <header>
-  <div class="crumb">আমার কর্মক্ষেত্র <i data-lucide="chevron-right" style="width:13px;vertical-align:middle;stroke:var(--dim)"></i><b>ড্যাশবোর্ড</b></div>
+  <div class="crumb">আমার কর্মক্ষেত্র <i data-lucide="chevron-right" style="width:13px;vertical-align:middle;stroke:var(--dim)"></i><b id="crb">ড্যাশবোর্ড</b></div>
   <div class="gl"><div class="search"><i data-lucide="search"></i><span>কাজ, প্রজেক্ট বা লেনদেন খুঁজুন...</span><small style="font:10px Inter">⌘ K</small></div><div class="ic" id="thb" onclick="toggleTheme()" style="cursor:pointer" title="থিম বদলান"></div><div class="ic"><i data-lucide="bell"></i></div><div class="av" style="width:38px;height:38px">SNK</div></div>
  </header>
- <div class="wrap">
+ <div class="wrap" id="dv">
   <div class="top"><div><div class="d"><i data-lucide="sun"></i><span id="dt"></span></div><h1>আসসালামু আলাইকুম, সাইফুল</h1><p>জীবনটা হোক গোছানো। আজকের ছোট পদক্ষেপেই আগামী দিনের সাফল্য।</p></div><button class="btn" onclick="addTask()"><i data-lucide="plus"></i>নতুন কাজ</button></div>
   <div class="cards" id="cards"></div>
   <div class="ban"><div class="f"><i data-lucide="flame"></i><div><b>টানা ৭ দিন এগিয়ে চলেছেন!</b><small>আজকের রুটিনে আরও ২টি অভ্যাস পূরণ করুন।</small></div></div><span class="tag">প্রতিদিন একটু ভালো</span></div>
   <div class="row">
    <div class="card"><div class="h"><b>আজকের কাজ</b><a>সব দেখুন →</a></div><div class="flt" id="flt"></div><div id="tasks"></div><div class="sum"><span id="cnt"></span><a onclick="addTask()">+ কাজ যোগ করুন</a></div></div>
-   <div class="card"><div class="h"><b>প্রজেক্টের অগ্রগতি</b><a>সব →</a></div><div id="proj"></div></div>
+   <div class="card"><div class="h"><b>প্রজেক্টের অগ্রগতি</b><a onclick="goP()">সব →</a></div><div id="proj"></div></div>
    <div class="card"><div class="h"><b>আজকের রুটিন</b><a>সব →</a></div><div class="loc"><i data-lucide="map-pin"></i>ঢাকা, বাংলাদেশ • শুক্রবার</div><div id="rout"></div><hr style="margin:12px 0"><div class="hab"><span>অভ্যাস পূরণ</span><i>৩ / ৫</i></div><div class="bar" style="margin:0"><i style="width:60%"></i></div></div>
   </div>
   <div class="row">
@@ -123,7 +123,10 @@ h1{font-size:28px;font-weight:600;line-height:1.5}.top p{color:var(--mu)}
   </div>
   <div class="foot"><span>SNK Life Manager v1.0 • আপনার জীবন, আপনার নিয়ন্ত্রণ</span><span>ক্লাউড সিঙ্ক চালু • এইমাত্র আপডেট হয়েছে</span></div>
  </div>
+<div class="wrap" id="pv" style="display:none"><div class="top"><div><h1>প্রজেক্টসমূহ</h1><p>সব প্রজেক্ট ও তার অগ্রগতি এক জায়গায়</p></div><button class="btn" onclick="addP()"><i data-lucide="plus"></i>নতুন প্রজেক্ট</button></div><div class="cards" id="pgrid" style="grid-template-columns:repeat(auto-fill,minmax(300px,1fr))"></div></div>
 </main>
+<div id="mp" class="md" onclick="if(event.target==this)clP()"><div class="sh"><b>নতুন প্রজেক্ট</b><input id="pn" class="in" placeholder="প্রজেক্টের নাম"><input id="pd" class="in" placeholder="সংক্ষিপ্ত বিবরণ"><label class="mu" style="font-size:12px">ডেডলাইন (ঐচ্ছিক)</label><input id="pdl" class="in" type="date"><button class="btn" style="justify-content:center" onclick="subP()">যোগ করুন</button></div></div>
+
 <div id="md" class="md" onclick="if(event.target==this)cl()"><div class="sh"><b id="mh"></b>
 <div class="seg" id="fty"><button id="sg1" onclick="setSG(1)">↙ আয়</button><button id="sg2" onclick="setSG(-1)">↗ ব্যয়</button></div>
 <input id="fn" class="in"><input id="fa" class="in" type="number" inputmode="numeric" placeholder="পরিমাণ (৳)"><select id="fc" class="in"></select><input id="ft" class="in" type="time">
@@ -138,7 +141,7 @@ function toggleTheme(){setTheme();themeIcon()}
 const bn=n=>String(n).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]),$=id=>document.getElementById(id),ic=n=>`<i data-lucide="${n}"></i>`;
 const nav=[['layout-dashboard','ড্যাশবোর্ড'],['list-todo','আমার কাজ',0,'৮'],['folder-kanban','প্রজেক্টসমূহ',0,'৩'],['wallet','আয়–ব্যয়'],['calendar-days','ক্যালেন্ডার'],['alarm-clock','রুটিন ও রিমাইন্ডার'],['chart-no-axes-combined','অগ্রগতি ও রিপোর্ট']];
 $('nav').innerHTML=nav.map((n,i)=>`<a class="${i?'':'on'}">${ic(n[0])}<span>${n[1]}</span>${n[3]?`<em>${n[3]}</em>`:''}</a>`).join('');
-document.querySelectorAll('#nav a').forEach(a=>a.onclick=()=>{document.querySelectorAll('#nav a').forEach(x=>x.classList.remove('on'));a.classList.add('on')});
+document.querySelectorAll('#nav a').forEach((a,i)=>a.onclick=()=>{document.querySelectorAll('#nav a').forEach(x=>x.classList.remove('on'));a.classList.add('on');showV(i)});
 $('cards').innerHTML=[['আজকের কাজ','৪ / ১২','৮টি কাজ বাকি • ৩৩% সম্পন্ন','list-checks',1],['চলমান প্রজেক্ট','৩টি','পরবর্তী ডেডলাইন: ১৮ মে','folder-kanban'],['মে মাসের আয়','৳ ২৫,০০০','২টি উৎস থেকে আয়','arrow-down-left'],['মে মাসের ব্যয়','৳ ১২,৫০০','বাজেটের ৬৩% ব্যবহার','arrow-up-right']].map(c=>`<div class="m ${c[4]?'hl':''}"><div><small>${c[0]}</small><b>${c[1]}</b><small>${c[2]}</small></div><div class="ic" style="flex:none">${ic(c[3])}</div></div>`).join('');
 let tasks=[['Monthly-report.html আপডেট','WebsitesDeal','দুপুর ২:০০',0,[]],['বাজার থেকে প্রয়োজনীয় জিনিস কেনা','ব্যক্তিগত','বিকাল ৪:০০',0,[]],['মাসিক হিসাব আপডেট','আর্থিক','বিকাল ৫:০০',0,[]],['নতুন কোর্সের পরিকল্পনা','SNK IT Institute','সন্ধ্যা ৬:০০',0,[]],['Admin changes সম্পন্ন করা','WebsitesDeal','সকাল ১০:০০',1,[]]],cat='সব';
 try{const q=JSON.parse(localStorage.getItem('snk_tasks'));if(q)tasks=q}catch(e){}
@@ -147,15 +150,15 @@ function drawTasks(){const l=tasks.filter(t=>cat=='সব'||(cat=='প্রজ�
 $('tasks').innerHTML=l.map(t=>`<div class="t ${t[3]?'done':''}" onclick="tog(${tasks.indexOf(t)})"><span class="cb">${ic('check')}</span><div><b>${t[0]}</b><p><span>${t[1]}</span><i class="${tasks.indexOf(t)==tasks.findIndex(x=>!x[3])?'hot':''}">${t[2]}</i></p></div></div>`).join('');
 {const d=tasks.filter(t=>t[3]).length,n=tasks.length,h=document.querySelector('.m.hl'),sm=h.querySelectorAll('small');h.querySelector('b').textContent=bn(d)+' / '+bn(n);sm[1].textContent=bn(n-d)+'টি কাজ বাকি • '+bn(n?Math.round(d/n*100):0)+'% সম্পন্ন'}
 $('cnt').textContent=bn(tasks.filter(t=>t[3]).length)+'টি সম্পন্ন হয়েছে, দারুণ এগোচ্ছেন!';
-$('flt').innerHTML=['সব','প্রজেক্ট','ব্যক্তিগত','আর্থিক'].map(c=>`<button class="${c==cat?'on':''}" onclick="cat='${c}';drawTasks()">${c=='সব'?'সব কাজ '+bn(tasks.length):c}</button>`).join('');lucide.createIcons()}
+$('flt').innerHTML=['সব','প্রজেক্ট','ব্যক্তিগত','আর্থিক'].map(c=>`<button class="${c==cat?'on':''}" onclick="cat='${c}';drawTasks()">${c=='সব'?'সব কাজ '+bn(tasks.length):c}</button>`).join('');drawPr();lucide.createIcons()}
 const tog=i=>{tasks[i][3]=!tasks[i][3];save();drawTasks()};
 function addTask(){openM('task')}
-$('proj').innerHTML=[['globe','WebsitesDeal','ওয়েবসাইট উন্নয়ন • ১৮ মে',67,'৪ / ৬'],['graduation-cap','SNK IT Institute','কোর্স ও কনটেন্ট • ২২ মে',45,'৫ / ১১'],['user-round','Personal','দৈনন্দিন জীবন ও লক্ষ্য',80,'৪ / ৫']].map(p=>`<div class="p"><div class="pi"><div class="ic">${ic(p[0])}</div><div><b>${p[1]}</b><small>${p[2]}</small></div><em>${bn(p[3])}%</em></div><div class="bar"><i style="width:${p[3]}%"></i></div><div class="pm"><span>${p[4]} কাজ সম্পন্ন</span><i>চলমান</i></div></div>`).join('');
+
 $('rout').innerHTML=[['০৫:০০','ফজর ও কুরআন','সম্পন্ন','circle-check'],['০৭:০০','হাঁটা ও ব্যায়াম','সম্পন্ন','circle-check'],['১০:০০','মনোযোগী কাজ','সম্পন্ন','circle-check'],['১৩:১৫','জুমার নামাজ','পরবর্তী','bell',1],['১৮:৩০','বই পড়া','৩০ মিনিট','bell']].map(r=>`<div class="r ${r[4]?'nx':''}"><span>${r[0]}</span><div><b>${r[1]}</b><small>${r[2]}</small></div>${ic(r[3])}</div>`).join('');
 
 let c=['রবি','সোম','মঙ্গল','বুধ','বৃহঃ','শুক্র','শনি'].map(d=>`<span class="w">${d}</span>`).join('')+'<span></span>'.repeat(new Date(NOW.getFullYear(),NOW.getMonth(),1).getDay());
 for(let d=1;d<=new Date(NOW.getFullYear(),NOW.getMonth()+1,0).getDate();d++)c+=`<span class="${d==NOW.getDate()?'td':d<NOW.getDate()?'o':''}">${bn(d)}</span>`;$('cal').innerHTML=c;
-$('qa').innerHTML=[['plus','নতুন কাজ যোগ করুন'],['folder-plus','নতুন প্রজেক্ট তৈরি'],['wallet','আয় বা ব্যয় যোগ করুন'],['alarm-clock','রিমাইন্ডার সেট করুন']].map(q=>`<div class="qa" onclick="${{plus:'addTask()',wallet:'addTx()'}[q[0]]||''}"><div class="ic">${ic(q[0])}</div><span>${q[1]}</span>${ic('chevron-right')}</div>`).join('');
+$('qa').innerHTML=[['plus','নতুন কাজ যোগ করুন'],['folder-plus','নতুন প্রজেক্ট তৈরি'],['wallet','আয় বা ব্যয় যোগ করুন'],['alarm-clock','রিমাইন্ডার সেট করুন']].map(q=>`<div class="qa" onclick="${{plus:'addTask()','folder-plus':'addP()',wallet:'addTx()'}[q[0]]||''}"><div class="ic">${ic(q[0])}</div><span>${q[1]}</span>${ic('chevron-right')}</div>`).join('');
 $('ch').innerHTML=[['শ',14],['র',28],['সো',21],['ম',35],['বু',21],['বৃ',21],['শু',28]].map((b,i)=>`<div class="${i==6?'on':''}"><i style="height:${b[1]}px"></i>${b[0]}</div>`).join('');
 let tt=null,s=1500;function timer(){if(tt){clearInterval(tt);tt=null;return}tt=setInterval(()=>{s--;$('tm').textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');if(!s)clearInterval(tt)},1000)}
 let T=[['WebsitesDeal পেমেন্ট','প্রজেক্ট আয়','আজ',10000,'briefcase-business'],['ফ্রিল্যান্স আয়','প্রজেক্ট আয়','১২ মে',15000,'briefcase-business'],['বাসা ভাড়া','বাসস্থান','১৫ মে',-5000,'house'],['ইন্টারনেট বিল','ইউটিলিটি','১৪ মে',-1200,'wifi'],['কোর্স ফি','শিক্ষা','১২ মে',-2300,'graduation-cap'],['বাজার খরচ','খাবার','১০ মে',-4000,'shopping-basket']];
@@ -174,12 +177,29 @@ $('tx').innerHTML=txh(T.slice(0,3));lucide.createIcons()}
 const delTx=i=>{if(confirm('এই লেনদেনটি মুছে ফেলবেন?')){T.splice(i,1);saveT();drawW()}};
 const setB=()=>{const v=+prompt('মাসিক বাজেট লিখুন (৳)',B);if(v>0){B=v;saveB();drawW()}};
 function addTx(){openM('exp')}
+let PR=[['WebsitesDeal','ওয়েবসাইট উন্নয়ন','2026-11-18','globe'],['SNK IT Institute','কোর্স ও কনটেন্ট','2026-11-22','graduation-cap'],['ব্যক্তিগত','দৈনন্দিন জীবন ও লক্ষ্য','','user-round']];
+try{const q=JSON.parse(localStorage.getItem('snk_projects'));if(q)PR=q}catch(e){}
+const savePr=()=>{try{localStorage.setItem('snk_projects',JSON.stringify(PR))}catch(e){}};
+const PI=['globe','graduation-cap','user-round','briefcase-business','rocket','book-open','layers','target'];
+const pst=p=>{const l=tasks.filter(t=>t[1]==p[0]),d=l.filter(t=>t[3]).length;return{n:l.length,d,pc:l.length?Math.round(d/l.length*100):0}};
+const dl=p=>{if(!p[2])return'ডেডলাইন নেই';const o=new Date(p[2]+'T00:00:00'),k=Math.round((o-new Date(new Date().toDateString()))/864e5);return o.toLocaleDateString('bn-BD',{day:'numeric',month:'long'})+(k>0?' • '+bn(k)+' দিন বাকি':k==0?' • আজই':' • সময় পার')};
+const newPr=()=>{const n=$('pn').value.trim();if(!n){$('pn').focus();return false}if(PR.some(p=>p[0]==n)){alert('এই নামে প্রজেক্ট আছে');return false}PR.push([n,$('pd').value.trim()||'নতুন প্রজেক্ট',$('pdl').value,PI[PR.length%PI.length]]);savePr();return true};
+const clP=()=>$('mp').classList.remove('on');
+function addP(){$('pn').value=$('pd').value=$('pdl').value='';$('mp').classList.add('on');setTimeout(()=>$('pn').focus(),50)}
+function drawPr(){const c=document.querySelectorAll('.m')[1];c.querySelector('b').textContent=bn(PR.length)+'টি';
+const nx=PR.filter(p=>p[2]).sort((a,b)=>a[2]>b[2]?1:-1)[0];c.querySelectorAll('small')[1].textContent=nx?'পরবর্তী ডেডলাইন: '+new Date(nx[2]+'T00:00:00').toLocaleDateString('bn-BD',{day:'numeric',month:'long'}):'কোনো ডেডলাইন নেই';
+$('proj').innerHTML=PR.slice(0,3).map(p=>{const s=pst(p);return `<div class="p"><div class="pi"><div class="ic">${ic(p[3])}</div><div><b>${p[0]}</b><small>${p[1]}</small></div><em>${bn(s.pc)}%</em></div><div class="bar"><i style="width:${s.pc}%"></i></div><div class="pm"><span>${bn(s.d)} / ${bn(s.n)} কাজ সম্পন্ন</span><i>${dl(p)}</i></div></div>`}).join('');
+$('pgrid').innerHTML=PR.map((p,i)=>{const s=pst(p);return `<div class="card"><div class="pi"><div class="ic">${ic(p[3])}</div><div><b>${p[0]}</b><small>${p[1]}</small></div><div class="ic" onclick="delP(${i})" style="cursor:pointer;background:var(--card2)">${ic('trash-2')}</div></div><div class="bar"><i style="width:${s.pc}%"></i></div><div class="pm" style="margin:8px 0"><span>${bn(s.d)} / ${bn(s.n)} কাজ • ${bn(s.pc)}%</span><i>${dl(p)}</i></div>${tasks.map((t,j)=>[t,j]).filter(([t])=>t[1]==p[0]).slice(0,4).map(([t,j])=>`<div class="t ${t[3]?'done':''}" onclick="tog(${j})"><span class="cb">${ic('check')}</span><div><b>${t[0]}</b><p><span>${t[2]}</span></p></div></div>`).join('')||'<p class="mu" style="color:var(--dim);padding:8px 0">এখনো কাজ নেই</p>'}</div>`}).join('')||'<p style="color:var(--dim)">কোনো প্রজেক্ট নেই</p>';lucide.createIcons()}
+function showV(i){const p=i==2;$('dv').style.display=p?'none':'';$('pv').style.display=p?'':'none';$('crb').textContent=p?'প্রজেক্টসমূহ':'ড্যাশবোর্ড';scrollTo(0,0)}
+const goP=()=>document.querySelectorAll('#nav a')[2].click();
+function subP(){if(newPr()){clP();drawPr()}}
+function delP(i){if(confirm('এই প্রজেক্টটি মুছে ফেলবেন? (কাজগুলো থাকবে)')){PR.splice(i,1);savePr();drawPr()}}
 const TC=['ব্যক্তিগত','WebsitesDeal','SNK IT Institute','আর্থিক'],CI=['প্রজেক্ট আয়','বেতন','অন্যান্য আয়'],CE=['বাসস্থান','খাবার','ইউটিলিটি','শিক্ষা','যাতায়াত','অন্যান্য'];
 let MODE='task',SG=-1;
 const opts=a=>a.map(c=>`<option>${c}</option>`).join(''),cl=()=>$('md').classList.remove('on');
 const fmtT=v=>{const[h,m]=v.split(':').map(Number);return(h<12?'সকাল ':h<16?'দুপুর ':h<18?'বিকাল ':'সন্ধ্যা ')+bn((h%12||12)+':'+String(m).padStart(2,'0'))};
 function setSG(g){SG=g;$('sg1').className=g>0?'on':'';$('sg2').className=g<0?'on':'';$('fc').innerHTML=opts(g>0?CI:CE)}
-function openM(m){MODE=m;const t=m=='task';$('mh').textContent=t?'নতুন কাজ':'নতুন লেনদেন';$('fty').style.display=$('fa').style.display=t?'none':'';$('ft').style.display=t?'':'none';$('fn').placeholder=t?'কাজের নাম':'বিবরণ (যেমন: বেতন, বাজার)';$('fn').value=$('fa').value=$('ft').value='';if(t)$('fc').innerHTML=opts(TC);else setSG(m=='inc'?1:-1);$('md').classList.add('on');setTimeout(()=>$('fn').focus(),50)}
+function openM(m){MODE=m;const t=m=='task';$('mh').textContent=t?'নতুন কাজ':'নতুন লেনদেন';$('fty').style.display=$('fa').style.display=t?'none':'';$('ft').style.display=t?'':'none';$('fn').placeholder=t?'কাজের নাম':'বিবরণ (যেমন: বেতন, বাজার)';$('fn').value=$('fa').value=$('ft').value='';if(t)$('fc').innerHTML=opts([...PR.map(p=>p[0]),'আর্থিক']);else setSG(m=='inc'?1:-1);$('md').classList.add('on');setTimeout(()=>$('fn').focus(),50)}
 function sub(){const n=$('fn').value.trim();if(!n){$('fn').focus();return}
 if(MODE=='task'){tasks.unshift([n,$('fc').value,$('ft').value?fmtT($('ft').value):'আজ',0,[]]);save();cat='সব';drawTasks()}
 else{const a=Math.abs(+$('fa').value);if(!a){$('fa').focus();return}T.unshift([n,$('fc').value,'আজ',SG*a,SG>0?'arrow-down-left':'arrow-up-right']);saveT();drawW()}cl()}

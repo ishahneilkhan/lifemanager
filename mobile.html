@@ -58,12 +58,13 @@ input,select{outline:0}.in{background:var(--card2);border:1px solid var(--bd);bo
 .fab{position:fixed;bottom:calc(92px + env(safe-area-inset-bottom));right:max(18px,calc(50% - 197px));width:56px;height:56px;border-radius:18px;background:var(--lime);border:0;display:grid;place-items:center;box-shadow:0 6px 18px #0005;z-index:8;cursor:pointer}.fab svg{stroke:var(--ink);width:26px;height:26px}
 nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:var(--side);border-top:1px solid var(--bd);display:flex;padding:12px 14px calc(24px + env(safe-area-inset-bottom));z-index:9}
 nav a{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;color:var(--dim);cursor:pointer}nav a svg{stroke:var(--dim);width:21px}
-nav a.on{color:var(--lime)}nav a.on svg{stroke:var(--lime)}nav a.on .p{background:var(--card3)}.p{width:56px;height:30px;border-radius:15px;display:grid;place-items:center}
+nav a.on{color:var(--lime)}nav a.on svg{stroke:var(--lime)}nav a.on .p{background:var(--card3)}.p{width:46px;height:30px;border-radius:15px;display:grid;place-items:center}
 </style>
 </head>
 <body>
 <div id="app"></div>
 <nav id="nav"></nav>
+<div id="mp" class="md" onclick="if(event.target==this)clP()"><div class="sh"><b>নতুন প্রজেক্ট</b><input id="pn" class="in" placeholder="প্রজেক্টের নাম"><input id="pd" class="in" placeholder="সংক্ষিপ্ত বিবরণ"><label class="mu" style="font-size:12px">ডেডলাইন (ঐচ্ছিক)</label><input id="pdl" class="in" type="date"><button class="btn" style="justify-content:center" onclick="subP()">যোগ করুন</button></div></div>
 <div id="mt" class="md" onclick="if(event.target==this)clT()"><div class="sh"><b id="mtt">আয় যোগ করুন</b><input id="tn" class="in" placeholder="বিবরণ (যেমন: বেতন)"><input id="ta" class="in" type="number" inputmode="numeric" placeholder="পরিমাণ (৳)"><select id="tc" class="in"></select><button class="btn" onclick="subT()">যোগ করুন</button></div></div>
 <div id="md" class="md" onclick="if(event.target==this)cl()"><div class="sh"><b>নতুন কাজ</b><input id="fn" class="in" placeholder="কাজের নাম"><select id="fc" class="in"><option>ব্যক্তিগত</option><option>WebsitesDeal</option><option>SNK IT Institute</option><option>আর্থিক</option></select><input id="ft" class="in" type="time"><button class="btn" onclick="sub()">যোগ করুন</button></div></div>
 <script>
@@ -94,9 +95,9 @@ const S={
 home:()=>hd(0,'আসসালামু আলাইকুম, সাইফুল',TD(),'bell')+`<div class="body">
 <div><b style="font-size:22px;font-weight:600">আজকের লক্ষ্য এগিয়ে নিন</b><div class="mu" style="font-size:13px">জীবনটা হোক গোছানো।</div></div>
 <div class="forest"><div class="f">${ic('flame')}টানা ৭ দিন এগিয়ে চলেছেন!</div><b>${P()[0]} / ${P()[1]}</b> <span class="mu">কাজ সম্পন্ন</span><div class="bar"><i style="width:${P()[2]}%"></i></div><div class="mu">আজকের রুটিনে আরও ২টি অভ্যাস পূরণ করুন।</div></div>
-<div class="g2"><div class="card"><div class="mu row" style="gap:6px">${ic('folder-kanban')}চলমান প্রজেক্ট</div><b>৩টি</b></div><div class="card"><div class="mu row" style="gap:6px">${ic('wallet')}ব্যালেন্স</div><b>${fb(M().bal)}</b></div></div>
+<div class="g2"><div class="card"><div class="mu row" style="gap:6px">${ic('folder-kanban')}চলমান প্রজেক্ট</div><b>${bn(PR.length)}টি</b></div><div class="card"><div class="mu row" style="gap:6px">${ic('wallet')}ব্যালেন্স</div><b>${fb(M().bal)}</b></div></div>
 <div><div class="h" style="margin-bottom:6px"><b>অগ্রাধিকার কাজ</b><a onclick="go('tasks')">সব দেখুন →</a></div><div class="card" style="padding:0 14px">${tasks.slice(0,2).map(task).join('')}</div></div>
-<div><div class="h" style="margin-bottom:10px"><b>প্রধান প্রজেক্ট</b><a>সব →</a></div><div class="card"><div class="row" style="margin-bottom:12px"><div class="ib">${ic('globe')}</div><div><b style="font-family:Inter">WebsitesDeal</b><span class="mu">ওয়েবসাইট উন্নয়ন • ১৮ মে</span></div><b style="color:var(--lime);font-size:18px;flex:none">৬৭%</b></div><div class="bar"><i style="width:67%"></i></div></div></div>
+<div><div class="h" style="margin-bottom:10px"><b>প্রধান প্রজেক্ট</b><a onclick="go('projects')">সব →</a></div>${(p=>p?`<div class="card" onclick="openP(0)" style="cursor:pointer"><div class="row" style="margin-bottom:12px"><div class="ib">${ic(p[3])}</div><div><b>${p[0]}</b><span class="mu">${p[1]}</span></div><b style="color:var(--lime);font-size:18px;flex:none">${bn(pst(p).pc)}%</b></div><div class="bar"><i style="width:${pst(p).pc}%"></i></div></div>`:'')(PR[0])}</div>
 <div class="card row">${ic('alarm-clock')}<div><span class="mu">পরবর্তী রুটিন • ১৩:১৫</span><b style="font-size:16px">জুমার নামাজ</b></div>${ic('chevron-right')}</div></div>`,
 tasks:()=>hd(0,'আমার কাজ',P()[3]+'টি কাজ বাকি','sliders-horizontal')+`<div class="body">
 <div class="search">${ic('search')}কাজ খুঁজুন...</div>
@@ -109,6 +110,8 @@ detail:()=>{const t=tasks[cur];if(!t)return S.home();const st=t[4]=t[4]||[],d=st
 <div class="card row"><div class="ib">${ic('calendar-days')}</div><div><span class="mu">সময়সীমা</span><b>${t[2]}</b></div></div>
 <div class="card"><div class="sp" style="margin-bottom:10px"><b>সাবটাস্ক</b><span class="mu">${bn(d)} / ${bn(st.length)}</span></div><div class="bar"><i style="width:${st.length?d/st.length*100:0}%"></i></div>${st.map((x,j)=>`<div class="t ${x[1]?'done':''}" onclick="stog(${j})"><span class="cb">${ic('check')}</span><div><b>${x[0]}</b></div></div>`).join('')}<div class="row" style="margin-top:12px"><input id="si" class="in" placeholder="নতুন সাবটাস্ক..."><button class="btn" style="width:auto;padding:0 18px;flex:none" onclick="sadd()">যোগ</button></div></div>
 <button class="btn" onclick="tog(${cur})">${ic('check')}${t[3]?'আবার পেন্ডিং করুন':'সম্পন্ন করুন'}</button></div>`},
+projects:()=>hd(0,'প্রজেক্টসমূহ',bn(PR.length)+'টি প্রজেক্ট','')+`<div class="body">${PR.map((p,i)=>{const s=pst(p);return `<div class="card" onclick="openP(${i})" style="cursor:pointer"><div class="row" style="margin-bottom:12px"><div class="ib">${ic(p[3])}</div><div><b>${p[0]}</b><span class="mu">${p[1]}</span></div><b style="color:var(--lime);font-size:18px;flex:none">${bn(s.pc)}%</b></div><div class="bar"><i style="width:${s.pc}%"></i></div><div class="sp mu" style="margin-top:8px"><span>${bn(s.d)} / ${bn(s.n)} কাজ সম্পন্ন</span><span>${dl(p)}</span></div></div>`}).join('')||'<p class="mu">কোনো প্রজেক্ট নেই</p>'}<button class="btn" onclick="addP()">${ic('plus')}নতুন প্রজেক্ট</button></div>`,
+pdetail:()=>{const p=PR[curP];if(!p)return S.projects();const s=pst(p);return `<div class="hd"><div class="ic" onclick="go('projects')">${ic('arrow-left')}</div><div><b>${p[0]}</b><small>${p[1]}</small></div><div class="ic" onclick="delP()">${ic('trash-2')}</div></div><div class="body"><div class="forest"><div class="f">${ic('calendar-days')}${dl(p)}</div><b>${bn(s.pc)}%</b> <span class="mu">${bn(s.d)} / ${bn(s.n)} কাজ</span><div class="bar"><i style="width:${s.pc}%"></i></div></div><div class="card" style="padding:0 14px">${tasks.map((t,i)=>[t,i]).filter(([t])=>t[1]==p[0]).map(([t,i])=>task(t,i)).join('')||'<p class="mu" style="padding:16px">এই প্রজেক্টে এখনো কাজ নেই</p>'}</div><button class="btn" onclick="addTo()">${ic('plus')}এই প্রজেক্টে কাজ যোগ করুন</button></div>`},
 wallet:()=>hd(0,'ওয়ালেট',MN,'ellipsis')+`<div class="body">
 <div class="bal"><span class="mu">মোট ব্যালেন্স</span><b>${fb(M().bal)}</b><div class="g2"><div><span class="mu">↙ আয়</span><b class="pos">${fm(M().inc)}</b></div><div><span class="mu">↗ ব্যয়</span><b>${fm(M().exp)}</b></div></div></div>
 <div class="g2"><button class="btn" onclick="addTx(1)">${ic('plus')}আয় যোগ</button><button class="btn o" onclick="addTx(-1)">${ic('minus')}ব্যয় যোগ</button></div>
@@ -117,17 +120,30 @@ wallet:()=>hd(0,'ওয়ালেট',MN,'ellipsis')+`<div class="body">
 <div><div class="h" style="margin-bottom:6px"><b>সাম্প্রতিক লেনদেন</b><a>সব →</a></div><div class="card" style="padding:0 14px">${txh(T.slice(0,5))||'<p class="mu" style="padding:16px">কোনো লেনদেন নেই</p>'}</div></div></div>`,
 me:()=>hd(0,'প্রোফাইল','অ্যাকাউন্ট ও সেটিংস','ellipsis')+`<div class="body">
 <div class="pf"><div class="av">SNK</div><b>সাইফুল ইসলাম</b><span class="mu">Personal workspace</span><div style="margin:10px 0"><span class="tag">সক্রিয় সদস্য</span></div><span style="color:var(--lime);font-size:12px">✎ প্রোফাইল এডিট করুন</span></div>
-<div class="card ach"><div><b>৭</b><span class="mu">দিনের স্ট্রিক</span></div><div><b>২৪</b><span class="mu">কাজ সম্পন্ন</span></div><div><b>৩</b><span class="mu">প্রজেক্ট</span></div></div>
+<div class="card ach"><div><b>৭</b><span class="mu">দিনের স্ট্রিক</span></div><div><b>${P()[0]}</b><span class="mu">কাজ সম্পন্ন</span></div><div><b>${bn(PR.length)}</b><span class="mu">প্রজেক্ট</span></div></div>
 <div><div class="h" style="margin-bottom:10px"><b>ব্যক্তিগত পছন্দ</b></div><div class="card" style="padding:4px 14px"><div class="set" onclick="toggleTheme()">${ic(isDark()?'moon':'sun')}<span>থিম</span><em>${isDark()?'ডার্ক':'লাইট'} ›</em></div><div class="set">${ic('languages')}<span>ভাষা</span><em>বাংলা ›</em></div><div class="set" onclick="sw[0]^=1;render()">${ic('bell')}<span>নোটিফিকেশন</span><div class="sw ${sw[0]?'on':''}"></div></div><div class="set" onclick="sw[1]^=1;render()">${ic('alarm-clock')}<span>রিমাইন্ডার</span><div class="sw ${sw[1]?'on':''}"></div></div></div></div>
 <div><div class="h" style="margin-bottom:10px"><b>ডেটা ও নিরাপত্তা</b></div><div class="card" style="padding:4px 14px"><div class="set" onclick="sw[2]^=1;render()">${ic('cloud-check')}<span>ক্লাউড ব্যাকআপ</span><div class="sw ${sw[2]?'on':''}"></div></div><div class="set">${ic('download')}<span>ডেটা এক্সপোর্ট</span><em>CSV ›</em></div><div class="set">${ic('shield-check')}<span>গোপনীয়তা ও নিরাপত্তা</span><em>›</em></div><div class="set">${ic('circle-help')}<span>সাহায্য কেন্দ্র</span><em>›</em></div></div></div>
 <button class="btn o" style="color:var(--red)">${ic('log-out')}লগ আউট</button><p class="mu" style="text-align:center;font-size:10px">SNK Life Manager v1.0</p></div>`};
-const N=[['home','house','হোম'],['tasks','list-todo','কাজ'],['wallet','wallet','ওয়ালেট'],['me','user-round','প্রোফাইল']];
-const FAB=()=>tab=='home'||tab=='tasks'?`<button class="fab" onclick="add()">${ic('plus')}</button>`:tab=='wallet'?`<button class="fab" onclick="addTx(-1)">${ic('plus')}</button>`:'';
-function render(){$('app').innerHTML=S[tab]()+FAB();$('nav').innerHTML=N.map(n=>`<a class="${n[0]==(tab=='detail'?'tasks':tab)?'on':''}" onclick="go('${n[0]}')"><div class="p">${ic(n[1])}</div>${n[2]}</a>`).join('');lucide.createIcons()}
+const N=[['home','house','হোম'],['tasks','list-todo','কাজ'],['projects','folder-kanban','প্রজেক্ট'],['wallet','wallet','ওয়ালেট'],['me','user-round','প্রোফাইল']];
+let PR=[['WebsitesDeal','ওয়েবসাইট উন্নয়ন','2026-11-18','globe'],['SNK IT Institute','কোর্স ও কনটেন্ট','2026-11-22','graduation-cap'],['ব্যক্তিগত','দৈনন্দিন জীবন ও লক্ষ্য','','user-round']];
+try{const q=JSON.parse(localStorage.getItem('snk_projects'));if(q)PR=q}catch(e){}
+const savePr=()=>{try{localStorage.setItem('snk_projects',JSON.stringify(PR))}catch(e){}};
+const PI=['globe','graduation-cap','user-round','briefcase-business','rocket','book-open','layers','target'];
+const pst=p=>{const l=tasks.filter(t=>t[1]==p[0]),d=l.filter(t=>t[3]).length;return{n:l.length,d,pc:l.length?Math.round(d/l.length*100):0}};
+const dl=p=>{if(!p[2])return'ডেডলাইন নেই';const o=new Date(p[2]+'T00:00:00'),k=Math.round((o-new Date(new Date().toDateString()))/864e5);return o.toLocaleDateString('bn-BD',{day:'numeric',month:'long'})+(k>0?' • '+bn(k)+' দিন বাকি':k==0?' • আজই':' • সময় পার')};
+const newPr=()=>{const n=$('pn').value.trim();if(!n){$('pn').focus();return false}if(PR.some(p=>p[0]==n)){alert('এই নামে প্রজেক্ট আছে');return false}PR.push([n,$('pd').value.trim()||'নতুন প্রজেক্ট',$('pdl').value,PI[PR.length%PI.length]]);savePr();return true};
+const clP=()=>$('mp').classList.remove('on');
+function addP(){$('pn').value=$('pd').value=$('pdl').value='';$('mp').classList.add('on');setTimeout(()=>$('pn').focus(),50)}
+let curP=0;
+const openP=i=>{curP=i;go('pdetail')},addTo=()=>add(PR[curP][0]);
+function subP(){if(newPr()){clP();render()}}
+function delP(){if(confirm('এই প্রজেক্টটি মুছে ফেলবেন? (কাজগুলো থাকবে)')){PR.splice(curP,1);savePr();go('projects')}}
+const FAB=()=>tab=='home'||tab=='tasks'?`<button class="fab" onclick="add()">${ic('plus')}</button>`:tab=='wallet'?`<button class="fab" onclick="addTx(-1)">${ic('plus')}</button>`:tab=='projects'?`<button class="fab" onclick="addP()">${ic('plus')}</button>`:'';
+function render(){$('app').innerHTML=S[tab]()+FAB();$('nav').innerHTML=N.map(n=>`<a class="${n[0]==({detail:'tasks',pdetail:'projects'}[tab]||tab)?'on':''}" onclick="go('${n[0]}')"><div class="p">${ic(n[1])}</div>${n[2]}</a>`).join('');lucide.createIcons()}
 const go=t=>{tab=t;render();scrollTo(0,0)},openT=i=>{cur=i;go('detail')},tog=i=>{tasks[i][3]^=1;save();render()};
 const stog=j=>{tasks[cur][4][j][1]^=1;save();render()},sadd=()=>{const v=$('si').value.trim();if(v){tasks[cur][4].push([v,0]);save();render()}};
 const del=()=>{if(confirm('এই কাজটি মুছে ফেলবেন?')){tasks.splice(cur,1);save();go('tasks')}};
-const add=()=>{$('fn').value='';$('ft').value='';$('md').classList.add('on');setTimeout(()=>$('fn').focus(),50)},cl=()=>$('md').classList.remove('on');
+const add=pre=>{$('fc').innerHTML=[...PR.map(p=>p[0]),'আর্থিক'].map(c=>`<option ${c==pre?'selected':''}>${c}</option>`).join('');$('fn').value='';$('ft').value='';$('md').classList.add('on');setTimeout(()=>$('fn').focus(),50)},cl=()=>$('md').classList.remove('on');
 function sub(){const n=$('fn').value.trim();if(!n){$('fn').focus();return}let t=$('ft').value||'আজ';if($('ft').value){const[h,m]=t.split(':').map(Number);t=(h%12||12)+':'+String(m).padStart(2,'0');t=(h<12?'সকাল ':h<16?'দুপুর ':h<18?'বিকাল ':'সন্ধ্যা ')+bn(t)}
 tasks.unshift([n,$('fc').value,t,0,[]]);save();cl();go('tasks')}
 const delTx=i=>{if(confirm('এই লেনদেনটি মুছে ফেলবেন?')){T.splice(i,1);saveT();render()}};

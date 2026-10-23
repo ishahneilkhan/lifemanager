@@ -8,7 +8,7 @@ Static site (HTML + CSS + JS), no build step. Host on GitHub Pages.
 
 PWA: open mobile.html on the phone -> browser menu -> "Add to Home Screen"; works offline after first load (sw.js, manifest.webmanifest, icon-*.png).
 
-Data is saved in the browser (localStorage, keys `snk_tasks`, `snk_tx`, `snk_budget`, `snk_theme`), shared by both pages.
+Data is saved in the browser (localStorage, keys `snk_tasks`, `snk_tx`, `snk_budget`, `snk_theme`, `snk_projects`), shared by both pages.
 
 ## Publish
 1. Repo `lifemanager.github.io` -> Add file -> Upload files -> upload everything in this folder -> Commit
