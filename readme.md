@@ -6,7 +6,7 @@ Static site (HTML + CSS + JS), no build step. Host on GitHub Pages.
 - `mobile.html` - mobile app screens (Home, Tasks, Task detail, Wallet with real income/expense, Profile)
 - `forest.jpg`  - (optional) export "Forest atmosphere" from Figma and add here for the banner image
 
-Data is saved in the browser (localStorage, keys `snk_tasks`, `snk_tx`), shared by both pages.
+Data is saved in the browser (localStorage, keys `snk_tasks`, `snk_tx`, `snk_budget`, `snk_theme`), shared by both pages.
 
 ## Publish
 1. Repo `lifemanager.github.io` -> Add file -> Upload files -> upload everything in this folder -> Commit
