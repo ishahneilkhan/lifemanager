@@ -72,7 +72,8 @@ h1{font-size:28px;font-weight:600;line-height:1.5}.top p{color:var(--mu)}
 .bal{background:var(--card2);border-radius:12px;padding:14px;display:flex;justify-content:space-between;align-items:center;margin-bottom:17px}.bal small{color:var(--mu);font-size:11px;display:block}.bal b{font-size:25px;color:var(--lime);font-weight:600}.bal div:last-child{text-align:right;font-size:11px;color:var(--mu)}.bal div:last-child i{display:block;font-style:normal;color:var(--lime)}
 .tx{display:flex;gap:12px;align-items:center;margin-bottom:16px}.tx .ic{width:36px;height:36px}.tx div{flex:1}.tx b{font-weight:500;display:block}.tx small{color:var(--mu);font-size:11px}.tx em{font-style:normal;font-weight:600;font-size:14px}.pos{color:var(--lime)}.neg{color:var(--red)}
 .add{width:100%;background:var(--card2);color:var(--tx);border:1px solid var(--bd);justify-content:center}.add svg{stroke:var(--tx)}
-.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:14px 0}.cal span{height:30px;display:grid;place-items:center;border-radius:8px;font-size:12px;position:relative}.cal .w{color:var(--dim);font-size:10px}.cal .o{color:var(--dim)}.cal .td{background:var(--lime);color:var(--ink);font-weight:700}.cal .ev:after{content:"";position:absolute;bottom:1px;width:3px;height:3px;border-radius:4px;background:var(--lime)}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:14px 0}.cal span{height:30px;display:grid;place-items:center;border-radius:8px;font-size:12px;position:relative}.cal .w{color:var(--dim);font-size:10px}.cal .o{color:var(--dim)}.cal .sel{outline:1px solid var(--lime)}.cal .td.ev:after{background:var(--ink)}
+.cal .td{background:var(--lime);color:var(--ink);font-weight:700}.cal .ev:after{content:"";position:absolute;bottom:1px;width:3px;height:3px;border-radius:4px;background:var(--lime)}
 .dl{display:flex;gap:10px;align-items:center;border-top:1px solid var(--bd);padding-top:14px;margin-top:14px}.dl:before{content:"";width:3px;height:38px;border-radius:3px;background:var(--lime)}.dl div{flex:1}.dl b{display:block;font-weight:500;font-size:12px}.dl small{color:var(--mu);font-size:10px}
 .ft{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--bd);padding-top:14px;margin-top:14px}.ft small{display:block;color:var(--mu);font-size:10px}.ft b{font:500 23px Inter}.ft .ic{background:var(--card3);width:38px;height:38px;cursor:pointer}
 .qa{display:flex;gap:10px;align-items:center;margin-bottom:14px;cursor:pointer;font-size:12px}.qa .ic{width:32px;height:32px;background:var(--card3)}.qa .ic svg{width:18px}.qa span{flex:1}.qa>svg{width:14px;stroke:var(--mu)}
@@ -118,13 +119,14 @@ h1{font-size:28px;font-weight:600;line-height:1.5}.top p{color:var(--mu)}
   </div>
   <div class="row">
    <div class="card"><div class="h"><b>আয়–ব্যয়ের হিসাব</b><a>ওয়ালেট দেখুন →</a></div><div class="bal"><div><small>বর্তমান ব্যালেন্স</small><b>৳ ১২,৫০০</b></div><div><span id="mn2"></span><i>আয়ের ৫০% সঞ্চয়</i></div></div><small style="color:var(--mu);font-size:11px;display:block;margin-bottom:12px">সাম্প্রতিক লেনদেন</small><div id="tx"></div><button class="btn add" onclick="addTx()"><i data-lucide="plus"></i>লেনদেন যোগ করুন</button></div>
-   <div class="card"><div class="h" style="margin:0"><b id="mn"></b><span><i data-lucide="chevron-left" style="width:16px;stroke:var(--mu)"></i> <i data-lucide="chevron-right" style="width:16px;stroke:var(--mu)"></i></span></div><div class="cal" id="cal"></div><div class="dl"><div><b>WebsitesDeal ডেলিভারি</b><small>১৮ মে, রবিবার • আর ২ দিন বাকি</small></div><i data-lucide="arrow-up-right"></i></div><div class="ft"><div><small>মনোযোগের সময়</small><b id="tm">25:00</b></div><div class="ic" onclick="timer()"><i data-lucide="play"></i></div></div></div>
+   <div class="card"><div class="h" style="margin:0"><b id="mn"></b><span style="display:flex;gap:10px;align-items:center"><span onclick="VM--;drawCal()" style="cursor:pointer"><i data-lucide="chevron-left" style="width:16px;stroke:var(--mu)"></i></span><span onclick="VM++;drawCal()" style="cursor:pointer"><i data-lucide="chevron-right" style="width:16px;stroke:var(--mu)"></i></span><span onclick="addE()" style="cursor:pointer" title="ইভেন্ট যোগ করুন"><i data-lucide="plus" style="width:17px"></i></span></span></div><div class="cal" id="cal"></div><div id="evl"></div><div class="ft"><div><small>মনোযোগের সময়</small><b id="tm">25:00</b></div><div class="ic" onclick="timer()"><i data-lucide="play"></i></div></div></div>
    <div class="card"><div class="h"><b>দ্রুত অ্যাকশন</b></div><div id="qa"></div><div class="wk"><i data-lucide="chart-no-axes-combined"></i><div><b>এই সপ্তাহে ২৪টি কাজ</b><small>গত সপ্তাহের চেয়ে ৬টি বেশি</small></div></div><div class="ch" id="ch"></div></div>
   </div>
   <div class="foot"><span>SNK Life Manager v1.0 • আপনার জীবন, আপনার নিয়ন্ত্রণ</span><span>ক্লাউড সিঙ্ক চালু • এইমাত্র আপডেট হয়েছে</span></div>
  </div>
 <div class="wrap" id="pv" style="display:none"><div class="top"><div><h1>প্রজেক্টসমূহ</h1><p>সব প্রজেক্ট ও তার অগ্রগতি এক জায়গায়</p></div><button class="btn" onclick="addP()"><i data-lucide="plus"></i>নতুন প্রজেক্ট</button></div><div class="cards" id="pgrid" style="grid-template-columns:repeat(auto-fill,minmax(300px,1fr))"></div></div>
 </main>
+<div id="mev" class="md" onclick="if(event.target==this)clE()"><div class="sh"><b>নতুন ইভেন্ট</b><input id="en" class="in" placeholder="ইভেন্টের নাম"><input id="ed" class="in" type="date"><input id="et" class="in" type="time"><button class="btn" style="justify-content:center" onclick="subE()">যোগ করুন</button></div></div>
 <div id="mp" class="md" onclick="if(event.target==this)clP()"><div class="sh"><b>নতুন প্রজেক্ট</b><input id="pn" class="in" placeholder="প্রজেক্টের নাম"><input id="pd" class="in" placeholder="সংক্ষিপ্ত বিবরণ"><label class="mu" style="font-size:12px">ডেডলাইন (ঐচ্ছিক)</label><input id="pdl" class="in" type="date"><button class="btn" style="justify-content:center" onclick="subP()">যোগ করুন</button></div></div>
 
 <div id="md" class="md" onclick="if(event.target==this)cl()"><div class="sh"><b id="mh"></b>
@@ -150,14 +152,13 @@ function drawTasks(){const l=tasks.filter(t=>cat=='সব'||(cat=='প্রজ�
 $('tasks').innerHTML=l.map(t=>`<div class="t ${t[3]?'done':''}" onclick="tog(${tasks.indexOf(t)})"><span class="cb">${ic('check')}</span><div><b>${t[0]}</b><p><span>${t[1]}</span><i class="${tasks.indexOf(t)==tasks.findIndex(x=>!x[3])?'hot':''}">${t[2]}</i></p></div></div>`).join('');
 {const d=tasks.filter(t=>t[3]).length,n=tasks.length,h=document.querySelector('.m.hl'),sm=h.querySelectorAll('small');h.querySelector('b').textContent=bn(d)+' / '+bn(n);sm[1].textContent=bn(n-d)+'টি কাজ বাকি • '+bn(n?Math.round(d/n*100):0)+'% সম্পন্ন'}
 $('cnt').textContent=bn(tasks.filter(t=>t[3]).length)+'টি সম্পন্ন হয়েছে, দারুণ এগোচ্ছেন!';
-$('flt').innerHTML=['সব','প্রজেক্ট','ব্যক্তিগত','আর্থিক'].map(c=>`<button class="${c==cat?'on':''}" onclick="cat='${c}';drawTasks()">${c=='সব'?'সব কাজ '+bn(tasks.length):c}</button>`).join('');drawPr();lucide.createIcons()}
+$('flt').innerHTML=['সব','প্রজেক্ট','ব্যক্তিগত','আর্থিক'].map(c=>`<button class="${c==cat?'on':''}" onclick="cat='${c}';drawTasks()">${c=='সব'?'সব কাজ '+bn(tasks.length):c}</button>`).join('');drawPr();drawCal();lucide.createIcons()}
 const tog=i=>{tasks[i][3]=!tasks[i][3];save();drawTasks()};
 function addTask(){openM('task')}
 
 $('rout').innerHTML=[['০৫:০০','ফজর ও কুরআন','সম্পন্ন','circle-check'],['০৭:০০','হাঁটা ও ব্যায়াম','সম্পন্ন','circle-check'],['১০:০০','মনোযোগী কাজ','সম্পন্ন','circle-check'],['১৩:১৫','জুমার নামাজ','পরবর্তী','bell',1],['১৮:৩০','বই পড়া','৩০ মিনিট','bell']].map(r=>`<div class="r ${r[4]?'nx':''}"><span>${r[0]}</span><div><b>${r[1]}</b><small>${r[2]}</small></div>${ic(r[3])}</div>`).join('');
 
-let c=['রবি','সোম','মঙ্গল','বুধ','বৃহঃ','শুক্র','শনি'].map(d=>`<span class="w">${d}</span>`).join('')+'<span></span>'.repeat(new Date(NOW.getFullYear(),NOW.getMonth(),1).getDay());
-for(let d=1;d<=new Date(NOW.getFullYear(),NOW.getMonth()+1,0).getDate();d++)c+=`<span class="${d==NOW.getDate()?'td':d<NOW.getDate()?'o':''}">${bn(d)}</span>`;$('cal').innerHTML=c;
+
 $('qa').innerHTML=[['plus','নতুন কাজ যোগ করুন'],['folder-plus','নতুন প্রজেক্ট তৈরি'],['wallet','আয় বা ব্যয় যোগ করুন'],['alarm-clock','রিমাইন্ডার সেট করুন']].map(q=>`<div class="qa" onclick="${{plus:'addTask()','folder-plus':'addP()',wallet:'addTx()'}[q[0]]||''}"><div class="ic">${ic(q[0])}</div><span>${q[1]}</span>${ic('chevron-right')}</div>`).join('');
 $('ch').innerHTML=[['শ',14],['র',28],['সো',21],['ম',35],['বু',21],['বৃ',21],['শু',28]].map((b,i)=>`<div class="${i==6?'on':''}"><i style="height:${b[1]}px"></i>${b[0]}</div>`).join('');
 let tt=null,s=1500;function timer(){if(tt){clearInterval(tt);tt=null;return}tt=setInterval(()=>{s--;$('tm').textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');if(!s)clearInterval(tt)},1000)}
@@ -169,7 +170,7 @@ const saveT=()=>{try{localStorage.setItem('snk_tx',JSON.stringify(T))}catch(e){}
 const M=()=>{const inc=T.filter(t=>t[3]>0).reduce((a,t)=>a+t[3],0),exp=-T.filter(t=>t[3]<0).reduce((a,t)=>a+t[3],0);return{inc,exp,bal:inc-exp,pct:Math.round(exp/B*100),n:T.filter(t=>t[3]>0).length}};
 const fm=n=>'৳ '+bn(Math.abs(n).toLocaleString('en-IN')),fb=n=>(n<0?'− ':'')+fm(n);
 const txh=a=>a.map(t=>`<div class="tx" style="cursor:pointer" onclick="delTx(${T.indexOf(t)})"><div class="ib" style="flex:none">${ic(t[4])}</div><div><b>${t[0]}</b><small>${t[2]} • ${t[1]}</small></div><em class="${t[3]>0?'pos':'neg'}">${t[3]>0?'+':'−'} ${fm(t[3])}</em></div>`).join('');
-function drawW(){themeIcon();const m=M(),c=document.querySelectorAll('.m');$('dt').textContent=DT;$('mn').textContent=$('mn2').textContent=MN;c[3].onclick=setB;c[3].style.cursor='pointer';
+function drawW(){themeIcon();const m=M(),c=document.querySelectorAll('.m');$('dt').textContent=DT;$('mn2').textContent=MN;drawCal();c[3].onclick=setB;c[3].style.cursor='pointer';
 c[2].querySelector('b').textContent=fm(m.inc);c[2].querySelectorAll('small')[1].textContent=bn(m.n)+'টি উৎস থেকে আয়';
 c[3].querySelector('b').textContent=fm(m.exp);c[3].querySelectorAll('small')[1].textContent='বাজেট '+fm(B)+' এর '+bn(m.pct)+'% (বদলাতে চাপুন)';
 document.querySelector('.bal b').textContent=fb(m.bal);document.querySelector('.bal div:last-child i').textContent='আয়ের '+bn(m.inc?Math.round(m.bal/m.inc*100):0)+'% সঞ্চয়';
@@ -190,10 +191,27 @@ function drawPr(){const c=document.querySelectorAll('.m')[1];c.querySelector('b'
 const nx=PR.filter(p=>p[2]).sort((a,b)=>a[2]>b[2]?1:-1)[0];c.querySelectorAll('small')[1].textContent=nx?'পরবর্তী ডেডলাইন: '+new Date(nx[2]+'T00:00:00').toLocaleDateString('bn-BD',{day:'numeric',month:'long'}):'কোনো ডেডলাইন নেই';
 $('proj').innerHTML=PR.slice(0,3).map(p=>{const s=pst(p);return `<div class="p"><div class="pi"><div class="ic">${ic(p[3])}</div><div><b>${p[0]}</b><small>${p[1]}</small></div><em>${bn(s.pc)}%</em></div><div class="bar"><i style="width:${s.pc}%"></i></div><div class="pm"><span>${bn(s.d)} / ${bn(s.n)} কাজ সম্পন্ন</span><i>${dl(p)}</i></div></div>`}).join('');
 $('pgrid').innerHTML=PR.map((p,i)=>{const s=pst(p);return `<div class="card"><div class="pi"><div class="ic">${ic(p[3])}</div><div><b>${p[0]}</b><small>${p[1]}</small></div><div class="ic" onclick="delP(${i})" style="cursor:pointer;background:var(--card2)">${ic('trash-2')}</div></div><div class="bar"><i style="width:${s.pc}%"></i></div><div class="pm" style="margin:8px 0"><span>${bn(s.d)} / ${bn(s.n)} কাজ • ${bn(s.pc)}%</span><i>${dl(p)}</i></div>${tasks.map((t,j)=>[t,j]).filter(([t])=>t[1]==p[0]).slice(0,4).map(([t,j])=>`<div class="t ${t[3]?'done':''}" onclick="tog(${j})"><span class="cb">${ic('check')}</span><div><b>${t[0]}</b><p><span>${t[2]}</span></p></div></div>`).join('')||'<p class="mu" style="color:var(--dim);padding:8px 0">এখনো কাজ নেই</p>'}</div>`}).join('')||'<p style="color:var(--dim)">কোনো প্রজেক্ট নেই</p>';lucide.createIcons()}
-function showV(i){const p=i==2;$('dv').style.display=p?'none':'';$('pv').style.display=p?'':'none';$('crb').textContent=p?'প্রজেক্টসমূহ':'ড্যাশবোর্ড';scrollTo(0,0)}
+function showV(i){const p=i==2;$('dv').style.display=p?'none':'';$('pv').style.display=p?'':'none';$('crb').textContent=p?'প্রজেক্টসমূহ':'ড্যাশবোর্ড';if(i==4)setTimeout(()=>$('cal').scrollIntoView({behavior:'smooth',block:'center'}),60);scrollTo(0,0)}
 const goP=()=>document.querySelectorAll('#nav a')[2].click();
 function subP(){if(newPr()){clP();drawPr()}}
 function delP(i){if(confirm('এই প্রজেক্টটি মুছে ফেলবেন? (কাজগুলো থাকবে)')){PR.splice(i,1);savePr();drawPr()}}
+let EV=[];try{const q=JSON.parse(localStorage.getItem('snk_events'));if(q)EV=q}catch(e){}
+const saveE=()=>{try{localStorage.setItem('snk_events',JSON.stringify(EV))}catch(e){}};
+const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const dlab=k=>new Date(k+'T00:00:00').toLocaleDateString('bn-BD',{weekday:'long',day:'numeric',month:'long'});
+const dayItems=k=>[...EV.map((e,i)=>({t:e[0],tm:e[2]||'',ev:i,k:e[1]})).filter(x=>x.k==k),...PR.filter(p=>p[2]==k).map(p=>({t:p[0]+' ডেডলাইন',tm:'',pr:1}))];
+const upc=()=>{const t=iso(new Date());return[...EV.map(e=>[e[1],e[0],e[2]||'']),...PR.filter(p=>p[2]).map(p=>[p[2],p[0]+' ডেডলাইন',''])].filter(x=>x[0]>=t).sort((a,b)=>(a[0]+a[2])>(b[0]+b[2])?1:-1)[0]};
+let VM=0,SD=iso(new Date());
+const calGrid=(click)=>{const b=new Date(NOW.getFullYear(),NOW.getMonth()+VM,1),y=b.getFullYear(),m=b.getMonth(),n=new Date(y,m+1,0).getDate(),td=iso(new Date());
+let c=['রবি','সোম','মঙ্গল','বুধ','বৃহঃ','শুক্র','শনি'].map(d=>`<span class="w">${d}</span>`).join('')+'<span></span>'.repeat(b.getDay());
+for(let d=1;d<=n;d++){const k=y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');c+=`<span onclick="SD='${k}';${click}" class="${k==td?'td':k<td?'o':''} ${dayItems(k).length?'ev':''} ${k==SD&&k!=td?'sel':''}">${bn(d)}</span>`}
+return{c,title:b.toLocaleDateString('bn-BD',{month:'long',year:'numeric'})}};
+const evRows=(m)=>dayItems(SD).map(x=>`<div class="${m?'tx':'dl'}" ${x.ev!=null?`onclick="delE(${x.ev})" style="cursor:pointer"`:''}>${m?`<div class="ib" style="flex:none">${ic(x.pr?'flag':'calendar-days')}</div>`:''}<div><b>${x.t}</b><small>${x.tm?fmtT(x.tm):x.pr?'প্রজেক্ট ডেডলাইন':'ইভেন্ট'+(x.ev!=null?' • মুছতে চাপুন':'')}</small></div></div>`).join('')||'<p style="color:var(--dim);font-size:12px;padding:14px 0">এই দিনে কিছু নেই</p>';
+function addE(){$('en').value='';$('ed').value=SD;$('et').value='';$('mev').classList.add('on');setTimeout(()=>$('en').focus(),50)}
+const clE=()=>$('mev').classList.remove('on');
+function drawCal(){const g=calGrid('drawCal()');$('mn').textContent=g.title;$('cal').innerHTML=g.c;$('evl').innerHTML=`<div style="color:var(--mu);font-size:11px;margin:12px 0 4px">${dlab(SD)}</div>`+evRows(0);lucide.createIcons()}
+function subE(){const n=$('en').value.trim(),d=$('ed').value;if(!n){$('en').focus();return}if(!d){$('ed').focus();return}EV.push([n,d,$('et').value]);saveE();SD=d;VM=0;clE();drawCal()}
+function delE(i){if(confirm('এই ইভেন্টটি মুছে ফেলবেন?')){EV.splice(i,1);saveE();drawCal()}}
 const TC=['ব্যক্তিগত','WebsitesDeal','SNK IT Institute','আর্থিক'],CI=['প্রজেক্ট আয়','বেতন','অন্যান্য আয়'],CE=['বাসস্থান','খাবার','ইউটিলিটি','শিক্ষা','যাতায়াত','অন্যান্য'];
 let MODE='task',SG=-1;
 const opts=a=>a.map(c=>`<option>${c}</option>`).join(''),cl=()=>$('md').classList.remove('on');
