@@ -1,0 +1,14 @@
+{
+  "name": "SNK Life Manager",
+  "short_name": "SNK Manager",
+  "description": "Personal tasks, projects, prayer reminders and finance tracker",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b100d",
+  "theme_color": "#101610",
+  "lang": "bn",
+  "icons": [
+    {"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}
