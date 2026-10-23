@@ -3,13 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta id="tc" name="theme-color" content="#080f0d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script>try{var t=localStorage.getItem("snk_theme")||(matchMedia("(prefers-color-scheme: light)").matches?"light":"dark");document.documentElement.dataset.theme=t;document.getElementById("tc").content=t=="light"?"#f3f6ef":"#080f0d"}catch(e){}</script>
 <title>SNK Life Manager - Mobile</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.441.0/dist/umd/lucide.min.js"></script>
 <style>
-:root{--bg:#080f0d;--side:#0b1511;--bd:#263b2e;--card:#101e18;--card2:#16271f;--card3:#233b23;--lime:#bcf568;--tx:#f1f5ed;--mu:#a4b5a7;--dim:#718578;--red:#f0a28f;--ink:#101a0c}
+:root{--bg:#080f0d;--side:#0b1511;--bd:#263b2e;--card:#101e18;--card2:#16271f;--card3:#233b23;--lime:#bcf568;--tx:#f1f5ed;--mu:#a4b5a7;--dim:#718578;--red:#f0a28f;--ink:#101a0c;--bd2:#486332}
+[data-theme=light]{--bg:#f3f6ef;--side:#fff;--bd:#dbe4d5;--card:#fff;--card2:#edf3e8;--card3:#e1efc9;--lime:#3f7a0a;--tx:#14210f;--mu:#4d5f4d;--dim:#7a897a;--red:#c0482d;--ink:#fff;--bd2:#b4cf8c;color-scheme:light}
+html{-webkit-text-size-adjust:100%}button{touch-action:manipulation}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{background:var(--bg);color:var(--tx);font:13px/1.5 'Noto Sans Bengali','Inter',sans-serif;display:flex;justify-content:center}
+body{background:var(--bg);color:var(--tx);font:14px/1.5 'Noto Sans Bengali','Inter',sans-serif;display:flex;justify-content:center}
 svg.lucide,i[data-lucide]{width:20px;height:20px;stroke:var(--lime);flex-shrink:0}
 #app{width:100%;max-width:430px;min-height:100vh;position:relative;padding-bottom:calc(98px + env(safe-area-inset-bottom))}
 .hd{display:flex;align-items:center;gap:12px;padding:calc(16px + env(safe-area-inset-top)) 22px 16px}
@@ -23,7 +28,7 @@ svg.lucide,i[data-lucide]{width:20px;height:20px;stroke:var(--lime);flex-shrink:
 .bar{height:5px;background:var(--bd);border-radius:100px}.bar i{display:block;height:5px;background:var(--lime);border-radius:100px}
 .sp{display:flex;justify-content:space-between;align-items:center}
 .mu{color:var(--mu);font-size:11px}
-.forest{position:relative;overflow:hidden;border-radius:18px;padding:18px;background:linear-gradient(135deg,#16271f,#1d3a28 60%,#2a4a35)}
+.forest{position:relative;overflow:hidden;border-radius:18px;padding:18px;background:linear-gradient(135deg,var(--card2),var(--card3))}
 .forest b{font-size:40px;font-weight:600;line-height:1.2}.forest .f{display:flex;gap:6px;align-items:center;color:var(--lime);font-size:12px;margin-bottom:10px}.forest .f svg{width:16px}
 .forest .bar{margin:10px 0}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.g2 .card b{font-size:28px;font-weight:600;display:block;margin-top:6px}
@@ -37,7 +42,7 @@ svg.lucide,i[data-lucide]{width:20px;height:20px;stroke:var(--lime);flex-shrink:
 .days{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.days button{background:var(--card);border:1px solid var(--bd);border-radius:14px;height:73px;color:var(--mu);font:11px 'Noto Sans Bengali';display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer}.days b{font-size:22px;color:var(--tx)}.days .on{background:var(--lime);border-color:var(--lime);color:var(--ink)}.days .on b{color:var(--ink)}
 .flt{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.flt button{background:var(--card2);color:var(--mu);border:0;border-radius:12px;height:36px;font:12px 'Noto Sans Bengali';cursor:pointer}.flt .on{background:var(--card3);color:var(--lime)}
 .btn{background:var(--lime);color:var(--ink);border:0;border-radius:14px;height:46px;display:flex;gap:8px;align-items:center;justify-content:center;font:600 14px 'Noto Sans Bengali';cursor:pointer;width:100%}.btn svg{stroke:var(--ink);width:18px}.btn.o{background:var(--card2);color:var(--tx);border:1px solid var(--bd)}.btn.o svg{stroke:var(--tx)}
-.bal{background:var(--card3);border:1px solid #486332;border-radius:18px;padding:20px}.bal b{font-size:44px;font-weight:600;color:var(--lime);display:block;line-height:1.3;margin:8px 0 14px}
+.bal{background:var(--card3);border:1px solid var(--bd2);border-radius:18px;padding:20px}.bal b{font-size:44px;font-weight:600;color:var(--lime);display:block;line-height:1.3;margin:8px 0 14px}
 .bal .g2 b{font-size:20px;color:var(--tx);margin:0}.pos{color:var(--lime)!important}.neg{color:var(--red)}
 .dist{display:flex;gap:4px;height:10px}.dist i{border-radius:10px}.leg{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:11px;color:var(--mu);margin-top:12px}.leg span:before{content:"";display:inline-block;width:6px;height:6px;border-radius:3px;background:var(--c);margin-right:5px}
 .tx{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--bd)}.tx:last-child{border:0}.tx div{flex:1}.tx b{display:block;font-weight:500}.tx small{color:var(--mu);font-size:11px}.tx em{font-style:normal;font-weight:600}
@@ -45,9 +50,10 @@ svg.lucide,i[data-lucide]{width:20px;height:20px;stroke:var(--lime);flex-shrink:
 .ach{display:grid;grid-template-columns:repeat(3,1fr);text-align:center}.ach b{font-size:24px;color:var(--lime);display:block;font-weight:600}
 .set{display:flex;gap:12px;align-items:center;height:42px;border-bottom:1px solid var(--bd);cursor:pointer}.set:last-child{border:0}.set svg{stroke:var(--mu);width:19px}.set span{flex:1}.set em{font-style:normal;color:var(--mu);font-size:12px}
 .sw{width:38px;height:22px;border-radius:22px;background:var(--bd);position:relative;flex-shrink:0}.sw:after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:var(--mu);transition:.2s}.sw.on{background:var(--lime)}.sw.on:after{left:19px;background:var(--ink)}
-input,select{outline:0}.in{background:var(--card2);border:1px solid var(--bd);border-radius:12px;height:44px;padding:0 12px;color:var(--tx);font:14px 'Noto Sans Bengali';width:100%}
+input,select{outline:0}.in{background:var(--card2);border:1px solid var(--bd);border-radius:12px;height:44px;padding:0 12px;color:var(--tx);font:16px 'Noto Sans Bengali';width:100%}
 .md{display:none;position:fixed;inset:0;background:#000a;z-index:20;align-items:flex-end;justify-content:center}.md.on{display:flex}
 .sh{background:var(--card);border-top:1px solid var(--bd);width:100%;max-width:430px;border-radius:20px 20px 0 0;padding:20px 22px calc(24px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:12px}.sh b{font-size:18px}
+.fab{position:fixed;bottom:calc(92px + env(safe-area-inset-bottom));right:max(18px,calc(50% - 197px));width:56px;height:56px;border-radius:18px;background:var(--lime);border:0;display:grid;place-items:center;box-shadow:0 6px 18px #0005;z-index:8;cursor:pointer}.fab svg{stroke:var(--ink);width:26px;height:26px}
 nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:var(--side);border-top:1px solid var(--bd);display:flex;padding:12px 14px calc(24px + env(safe-area-inset-bottom));z-index:9}
 nav a{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;color:var(--dim);cursor:pointer}nav a svg{stroke:var(--dim);width:21px}
 nav a.on{color:var(--lime)}nav a.on svg{stroke:var(--lime)}nav a.on .p{background:var(--card3)}.p{width:56px;height:30px;border-radius:15px;display:grid;place-items:center}
@@ -60,6 +66,9 @@ nav a.on{color:var(--lime)}nav a.on svg{stroke:var(--lime)}nav a.on .p{backgroun
 <div id="md" class="md" onclick="if(event.target==this)cl()"><div class="sh"><b>নতুন কাজ</b><input id="fn" class="in" placeholder="কাজের নাম"><select id="fc" class="in"><option>ব্যক্তিগত</option><option>WebsitesDeal</option><option>SNK IT Institute</option><option>আর্থিক</option></select><input id="ft" class="in" type="time"><button class="btn" onclick="sub()">যোগ করুন</button></div></div>
 <script>
 const NOW=new Date(),TD=()=>NOW.toLocaleDateString('bn-BD',{weekday:'long',day:'numeric',month:'long'}),MN=NOW.toLocaleDateString('bn-BD',{month:'long',year:'numeric'}),DT=NOW.toLocaleDateString('bn-BD',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+const isDark=()=>document.documentElement.dataset.theme!='light';
+function setTheme(){const t=isDark()?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('snk_theme',t);document.getElementById('tc').content=t=='light'?'#f3f6ef':'#080f0d'}catch(e){}}
+function toggleTheme(){setTheme();render()}
 const $=id=>document.getElementById(id),ic=n=>`<i data-lucide="${n}"></i>`;
 const bn=n=>String(n).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
 let tasks=[['Monthly-report.html আপডেট','WebsitesDeal','দুপুর ২:০০',0,[]],['বাজার থেকে প্রয়োজনীয় জিনিস কেনা','ব্যক্তিগত','বিকাল ৪:০০',0,[]],['মাসিক হিসাব আপডেট','আর্থিক','বিকাল ৫:০০',0,[]],['নতুন কোর্সের পরিকল্পনা','SNK IT Institute','সন্ধ্যা ৬:০০',0,[]],['Admin changes সম্পন্ন করা','WebsitesDeal','সকাল ১০:০০',1,[]]];
@@ -67,7 +76,7 @@ try{const q=JSON.parse(localStorage.getItem('snk_tasks'));if(q)tasks=q}catch(e){
 const save=()=>{try{localStorage.setItem('snk_tasks',JSON.stringify(tasks))}catch(e){}};
 const P=()=>{const d=tasks.filter(t=>t[3]).length,n=tasks.length;return[bn(d),bn(n),n?Math.round(d/n*100):0,bn(n-d)]};
 let cur=0,tab='home',day=4,flt=0,sw=[1,1,1];
-const hd=(l,t,s,r)=>`<div class="hd"><div class="av">SNK</div><div><b>${t}</b><small>${s}</small></div><div class="ic">${ic(r)}</div></div>`;
+const hd=(l,t,s,r)=>`<div class="hd"><div class="av">SNK</div><div><b>${t}</b><small>${s}</small></div><div class="ic" onclick="toggleTheme()" style="cursor:pointer">${ic(isDark()?'sun':'moon')}</div></div>`;
 const task=(t,i)=>`<div class="t ${t[3]?'done':''}"><span class="cb" onclick="tog(${i})">${ic('check')}</span><div onclick="openT(${i})"><b>${t[0]}</b><p><span>${t[1]}</span><span style="color:var(--lime)">${t[2]}</span></p></div></div>`;
 let T=[['WebsitesDeal পেমেন্ট','প্রজেক্ট আয়','আজ',10000,'briefcase-business'],['ফ্রিল্যান্স আয়','প্রজেক্ট আয়','১২ মে',15000,'briefcase-business'],['বাসা ভাড়া','বাসস্থান','১৫ মে',-5000,'house'],['ইন্টারনেট বিল','ইউটিলিটি','১৪ মে',-1200,'wifi'],['কোর্স ফি','শিক্ষা','১২ মে',-2300,'graduation-cap'],['বাজার খরচ','খাবার','১০ মে',-4000,'shopping-basket']];
 try{const q=JSON.parse(localStorage.getItem('snk_tx'));if(q)T=q}catch(e){}
@@ -77,7 +86,7 @@ const saveT=()=>{try{localStorage.setItem('snk_tx',JSON.stringify(T))}catch(e){}
 const M=()=>{const inc=T.filter(t=>t[3]>0).reduce((a,t)=>a+t[3],0),exp=-T.filter(t=>t[3]<0).reduce((a,t)=>a+t[3],0);return{inc,exp,bal:inc-exp,pct:Math.round(exp/B*100),n:T.filter(t=>t[3]>0).length}};
 const fm=n=>'৳ '+bn(Math.abs(n).toLocaleString('en-IN')),fb=n=>(n<0?'− ':'')+fm(n);
 const txh=a=>a.map(t=>`<div class="tx" style="cursor:pointer" onclick="delTx(${T.indexOf(t)})"><div class="ib" style="flex:none">${ic(t[4])}</div><div><b>${t[0]}</b><small>${t[2]} • ${t[1]}</small></div><em class="${t[3]>0?'pos':'neg'}">${t[3]>0?'+':'−'} ${fm(t[3])}</em></div>`).join('');
-const CL=['#bcf568','#7fb04d','#486332','#f0a28f','#a4b5a7'];
+const CL=['var(--lime)','#7fb04d','var(--bd2)','var(--red)','var(--mu)'];
 const dist=()=>{const g={};T.filter(t=>t[3]<0).forEach(t=>g[t[1]]=(g[t[1]]||0)-t[3]);const k=Object.keys(g);if(!k.length)return '<p class="mu">কোনো ব্যয় নেই</p>';return `<div class="dist">${k.map((c,i)=>`<i style="flex:${g[c]};background:${CL[i%5]}"></i>`).join('')}</div><div class="leg">${k.map((c,i)=>`<span style="--c:${CL[i%5]}">${c}</span>`).join('')}</div>`};
 const S={
 home:()=>hd(0,'আসসালামু আলাইকুম, সাইফুল',TD(),'bell')+`<div class="body">
@@ -107,11 +116,12 @@ wallet:()=>hd(0,'ওয়ালেট',MN,'ellipsis')+`<div class="body">
 me:()=>hd(0,'প্রোফাইল','অ্যাকাউন্ট ও সেটিংস','ellipsis')+`<div class="body">
 <div class="pf"><div class="av">SNK</div><b>সাইফুল ইসলাম</b><span class="mu">Personal workspace</span><div style="margin:10px 0"><span class="tag">সক্রিয় সদস্য</span></div><span style="color:var(--lime);font-size:12px">✎ প্রোফাইল এডিট করুন</span></div>
 <div class="card ach"><div><b>৭</b><span class="mu">দিনের স্ট্রিক</span></div><div><b>২৪</b><span class="mu">কাজ সম্পন্ন</span></div><div><b>৩</b><span class="mu">প্রজেক্ট</span></div></div>
-<div><div class="h" style="margin-bottom:10px"><b>ব্যক্তিগত পছন্দ</b></div><div class="card" style="padding:4px 14px"><div class="set">${ic('moon')}<span>থিম</span><em>ডার্ক ›</em></div><div class="set">${ic('languages')}<span>ভাষা</span><em>বাংলা ›</em></div><div class="set" onclick="sw[0]^=1;render()">${ic('bell')}<span>নোটিফিকেশন</span><div class="sw ${sw[0]?'on':''}"></div></div><div class="set" onclick="sw[1]^=1;render()">${ic('alarm-clock')}<span>রিমাইন্ডার</span><div class="sw ${sw[1]?'on':''}"></div></div></div></div>
+<div><div class="h" style="margin-bottom:10px"><b>ব্যক্তিগত পছন্দ</b></div><div class="card" style="padding:4px 14px"><div class="set" onclick="toggleTheme()">${ic(isDark()?'moon':'sun')}<span>থিম</span><em>${isDark()?'ডার্ক':'লাইট'} ›</em></div><div class="set">${ic('languages')}<span>ভাষা</span><em>বাংলা ›</em></div><div class="set" onclick="sw[0]^=1;render()">${ic('bell')}<span>নোটিফিকেশন</span><div class="sw ${sw[0]?'on':''}"></div></div><div class="set" onclick="sw[1]^=1;render()">${ic('alarm-clock')}<span>রিমাইন্ডার</span><div class="sw ${sw[1]?'on':''}"></div></div></div></div>
 <div><div class="h" style="margin-bottom:10px"><b>ডেটা ও নিরাপত্তা</b></div><div class="card" style="padding:4px 14px"><div class="set" onclick="sw[2]^=1;render()">${ic('cloud-check')}<span>ক্লাউড ব্যাকআপ</span><div class="sw ${sw[2]?'on':''}"></div></div><div class="set">${ic('download')}<span>ডেটা এক্সপোর্ট</span><em>CSV ›</em></div><div class="set">${ic('shield-check')}<span>গোপনীয়তা ও নিরাপত্তা</span><em>›</em></div><div class="set">${ic('circle-help')}<span>সাহায্য কেন্দ্র</span><em>›</em></div></div></div>
 <button class="btn o" style="color:var(--red)">${ic('log-out')}লগ আউট</button><p class="mu" style="text-align:center;font-size:10px">SNK Life Manager v1.0</p></div>`};
 const N=[['home','house','হোম'],['tasks','list-todo','কাজ'],['wallet','wallet','ওয়ালেট'],['me','user-round','প্রোফাইল']];
-function render(){$('app').innerHTML=S[tab]();$('nav').innerHTML=N.map(n=>`<a class="${n[0]==(tab=='detail'?'tasks':tab)?'on':''}" onclick="go('${n[0]}')"><div class="p">${ic(n[1])}</div>${n[2]}</a>`).join('');lucide.createIcons()}
+const FAB=()=>tab=='home'||tab=='tasks'?`<button class="fab" onclick="add()">${ic('plus')}</button>`:tab=='wallet'?`<button class="fab" onclick="addTx(-1)">${ic('plus')}</button>`:'';
+function render(){$('app').innerHTML=S[tab]()+FAB();$('nav').innerHTML=N.map(n=>`<a class="${n[0]==(tab=='detail'?'tasks':tab)?'on':''}" onclick="go('${n[0]}')"><div class="p">${ic(n[1])}</div>${n[2]}</a>`).join('');lucide.createIcons()}
 const go=t=>{tab=t;render();scrollTo(0,0)},openT=i=>{cur=i;go('detail')},tog=i=>{tasks[i][3]^=1;save();render()};
 const stog=j=>{tasks[cur][4][j][1]^=1;save();render()},sadd=()=>{const v=$('si').value.trim();if(v){tasks[cur][4].push([v,0]);save();render()}};
 const del=()=>{if(confirm('এই কাজটি মুছে ফেলবেন?')){tasks.splice(cur,1);save();go('tasks')}};
