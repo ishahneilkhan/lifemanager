@@ -6,6 +6,8 @@ Static site (HTML + CSS + JS), no build step. Host on GitHub Pages.
 - `mobile.html` - mobile app screens (Home, Tasks, Task detail, Wallet with real income/expense, Profile)
 - `forest.jpg`  - (optional) export "Forest atmosphere" from Figma and add here for the banner image
 
+PWA: open mobile.html on the phone -> browser menu -> "Add to Home Screen"; works offline after first load (sw.js, manifest.webmanifest, icon-*.png).
+
 Data is saved in the browser (localStorage, keys `snk_tasks`, `snk_tx`, `snk_budget`, `snk_theme`), shared by both pages.
 
 ## Publish

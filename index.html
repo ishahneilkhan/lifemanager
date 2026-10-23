@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
 <meta id="tc" name="theme-color" content="#080f0d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <script>try{var t=localStorage.getItem("snk_theme")||(matchMedia("(prefers-color-scheme: light)").matches?"light":"dark");document.documentElement.dataset.theme=t;document.getElementById("tc").content=t=="light"?"#f3f6ef":"#080f0d"}catch(e){}</script>
@@ -79,6 +81,10 @@ h1{font-size:28px;font-weight:600;line-height:1.5}.top p{color:var(--mu)}
 .foot{display:flex;justify-content:space-between;color:var(--dim);font-size:10px;flex-wrap:wrap;gap:8px}.foot span:last-child{color:var(--mu)}
 @media(max-width:1200px){.row{grid-template-columns:1fr 1fr}.row>:first-child{grid-column:1/-1}.cards{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:860px){aside{display:none}header{padding:0 16px}.search{display:none}.wrap{padding:16px}.row,.cards{grid-template-columns:1fr}h1{font-size:22px}.ban small{display:none}}
+.md{display:none;position:fixed;inset:0;background:#000a;z-index:20;align-items:center;justify-content:center}.md.on{display:flex}
+.sh{background:var(--card);border:1px solid var(--bd);width:min(420px,92vw);border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:12px}.sh b{font-size:18px}
+.in{background:var(--card2);border:1px solid var(--bd);border-radius:12px;height:44px;padding:0 12px;color:var(--tx);font:14px 'Noto Sans Bengali';width:100%;outline:0}.in:focus{border-color:var(--lime)}
+.seg{display:flex;gap:8px}.seg button{flex:1;height:40px;border-radius:12px;border:1px solid var(--bd);background:var(--card2);color:var(--mu);font:13px 'Noto Sans Bengali';cursor:pointer}.seg button.on{background:var(--lime);color:var(--ink);border-color:var(--lime);font-weight:600}
 </style>
 </head>
 <body>
@@ -118,6 +124,10 @@ h1{font-size:28px;font-weight:600;line-height:1.5}.top p{color:var(--mu)}
   <div class="foot"><span>SNK Life Manager v1.0 • আপনার জীবন, আপনার নিয়ন্ত্রণ</span><span>ক্লাউড সিঙ্ক চালু • এইমাত্র আপডেট হয়েছে</span></div>
  </div>
 </main>
+<div id="md" class="md" onclick="if(event.target==this)cl()"><div class="sh"><b id="mh"></b>
+<div class="seg" id="fty"><button id="sg1" onclick="setSG(1)">↙ আয়</button><button id="sg2" onclick="setSG(-1)">↗ ব্যয়</button></div>
+<input id="fn" class="in"><input id="fa" class="in" type="number" inputmode="numeric" placeholder="পরিমাণ (৳)"><select id="fc" class="in"></select><input id="ft" class="in" type="time">
+<button class="btn" style="justify-content:center" onclick="sub()">যোগ করুন</button></div></div>
 <script>
 if(innerWidth<860&&!location.search.includes('desktop'))location.replace('mobile.html');
 const NOW=new Date(),TD=()=>NOW.toLocaleDateString('bn-BD',{weekday:'long',day:'numeric',month:'long'}),MN=NOW.toLocaleDateString('bn-BD',{month:'long',year:'numeric'}),DT=NOW.toLocaleDateString('bn-BD',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
@@ -139,13 +149,13 @@ $('tasks').innerHTML=l.map(t=>`<div class="t ${t[3]?'done':''}" onclick="tog(${t
 $('cnt').textContent=bn(tasks.filter(t=>t[3]).length)+'টি সম্পন্ন হয়েছে, দারুণ এগোচ্ছেন!';
 $('flt').innerHTML=['সব','প্রজেক্ট','ব্যক্তিগত','আর্থিক'].map(c=>`<button class="${c==cat?'on':''}" onclick="cat='${c}';drawTasks()">${c=='সব'?'সব কাজ '+bn(tasks.length):c}</button>`).join('');lucide.createIcons()}
 const tog=i=>{tasks[i][3]=!tasks[i][3];save();drawTasks()};
-function addTask(){const t=prompt('নতুন কাজের নাম লিখুন');if(t){tasks.unshift([t,'ব্যক্তিগত','আজ',0,[]]);save();cat='সব';drawTasks()}}
+function addTask(){openM('task')}
 $('proj').innerHTML=[['globe','WebsitesDeal','ওয়েবসাইট উন্নয়ন • ১৮ মে',67,'৪ / ৬'],['graduation-cap','SNK IT Institute','কোর্স ও কনটেন্ট • ২২ মে',45,'৫ / ১১'],['user-round','Personal','দৈনন্দিন জীবন ও লক্ষ্য',80,'৪ / ৫']].map(p=>`<div class="p"><div class="pi"><div class="ic">${ic(p[0])}</div><div><b>${p[1]}</b><small>${p[2]}</small></div><em>${bn(p[3])}%</em></div><div class="bar"><i style="width:${p[3]}%"></i></div><div class="pm"><span>${p[4]} কাজ সম্পন্ন</span><i>চলমান</i></div></div>`).join('');
 $('rout').innerHTML=[['০৫:০০','ফজর ও কুরআন','সম্পন্ন','circle-check'],['০৭:০০','হাঁটা ও ব্যায়াম','সম্পন্ন','circle-check'],['১০:০০','মনোযোগী কাজ','সম্পন্ন','circle-check'],['১৩:১৫','জুমার নামাজ','পরবর্তী','bell',1],['১৮:৩০','বই পড়া','৩০ মিনিট','bell']].map(r=>`<div class="r ${r[4]?'nx':''}"><span>${r[0]}</span><div><b>${r[1]}</b><small>${r[2]}</small></div>${ic(r[3])}</div>`).join('');
 
 let c=['রবি','সোম','মঙ্গল','বুধ','বৃহঃ','শুক্র','শনি'].map(d=>`<span class="w">${d}</span>`).join('')+'<span></span>'.repeat(new Date(NOW.getFullYear(),NOW.getMonth(),1).getDay());
 for(let d=1;d<=new Date(NOW.getFullYear(),NOW.getMonth()+1,0).getDate();d++)c+=`<span class="${d==NOW.getDate()?'td':d<NOW.getDate()?'o':''}">${bn(d)}</span>`;$('cal').innerHTML=c;
-$('qa').innerHTML=[['plus','নতুন কাজ যোগ করুন'],['folder-plus','নতুন প্রজেক্ট তৈরি'],['wallet','আয় বা ব্যয় যোগ করুন'],['alarm-clock','রিমাইন্ডার সেট করুন']].map(q=>`<div class="qa"><div class="ic">${ic(q[0])}</div><span>${q[1]}</span>${ic('chevron-right')}</div>`).join('');
+$('qa').innerHTML=[['plus','নতুন কাজ যোগ করুন'],['folder-plus','নতুন প্রজেক্ট তৈরি'],['wallet','আয় বা ব্যয় যোগ করুন'],['alarm-clock','রিমাইন্ডার সেট করুন']].map(q=>`<div class="qa" onclick="${{plus:'addTask()',wallet:'addTx()'}[q[0]]||''}"><div class="ic">${ic(q[0])}</div><span>${q[1]}</span>${ic('chevron-right')}</div>`).join('');
 $('ch').innerHTML=[['শ',14],['র',28],['সো',21],['ম',35],['বু',21],['বৃ',21],['শু',28]].map((b,i)=>`<div class="${i==6?'on':''}"><i style="height:${b[1]}px"></i>${b[0]}</div>`).join('');
 let tt=null,s=1500;function timer(){if(tt){clearInterval(tt);tt=null;return}tt=setInterval(()=>{s--;$('tm').textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');if(!s)clearInterval(tt)},1000)}
 let T=[['WebsitesDeal পেমেন্ট','প্রজেক্ট আয়','আজ',10000,'briefcase-business'],['ফ্রিল্যান্স আয়','প্রজেক্ট আয়','১২ মে',15000,'briefcase-business'],['বাসা ভাড়া','বাসস্থান','১৫ মে',-5000,'house'],['ইন্টারনেট বিল','ইউটিলিটি','১৪ মে',-1200,'wifi'],['কোর্স ফি','শিক্ষা','১২ মে',-2300,'graduation-cap'],['বাজার খরচ','খাবার','১০ মে',-4000,'shopping-basket']];
@@ -163,7 +173,18 @@ document.querySelector('.bal b').textContent=fb(m.bal);document.querySelector('.
 $('tx').innerHTML=txh(T.slice(0,3));lucide.createIcons()}
 const delTx=i=>{if(confirm('এই লেনদেনটি মুছে ফেলবেন?')){T.splice(i,1);saveT();drawW()}};
 const setB=()=>{const v=+prompt('মাসিক বাজেট লিখুন (৳)',B);if(v>0){B=v;saveB();drawW()}};
-function addTx(){const n=prompt('বিবরণ লিখুন (যেমন: বেতন, বাজার)');if(!n)return;const a=+prompt('পরিমাণ লিখুন (ব্যয় হলে আগে - দিন, যেমন -500)');if(!a)return;T.unshift([n,a>0?'আয়':'ব্যয়','আজ',a,a>0?'arrow-down-left':'arrow-up-right']);saveT();drawW()}
+function addTx(){openM('exp')}
+const TC=['ব্যক্তিগত','WebsitesDeal','SNK IT Institute','আর্থিক'],CI=['প্রজেক্ট আয়','বেতন','অন্যান্য আয়'],CE=['বাসস্থান','খাবার','ইউটিলিটি','শিক্ষা','যাতায়াত','অন্যান্য'];
+let MODE='task',SG=-1;
+const opts=a=>a.map(c=>`<option>${c}</option>`).join(''),cl=()=>$('md').classList.remove('on');
+const fmtT=v=>{const[h,m]=v.split(':').map(Number);return(h<12?'সকাল ':h<16?'দুপুর ':h<18?'বিকাল ':'সন্ধ্যা ')+bn((h%12||12)+':'+String(m).padStart(2,'0'))};
+function setSG(g){SG=g;$('sg1').className=g>0?'on':'';$('sg2').className=g<0?'on':'';$('fc').innerHTML=opts(g>0?CI:CE)}
+function openM(m){MODE=m;const t=m=='task';$('mh').textContent=t?'নতুন কাজ':'নতুন লেনদেন';$('fty').style.display=$('fa').style.display=t?'none':'';$('ft').style.display=t?'':'none';$('fn').placeholder=t?'কাজের নাম':'বিবরণ (যেমন: বেতন, বাজার)';$('fn').value=$('fa').value=$('ft').value='';if(t)$('fc').innerHTML=opts(TC);else setSG(m=='inc'?1:-1);$('md').classList.add('on');setTimeout(()=>$('fn').focus(),50)}
+function sub(){const n=$('fn').value.trim();if(!n){$('fn').focus();return}
+if(MODE=='task'){tasks.unshift([n,$('fc').value,$('ft').value?fmtT($('ft').value):'আজ',0,[]]);save();cat='সব';drawTasks()}
+else{const a=Math.abs(+$('fa').value);if(!a){$('fa').focus();return}T.unshift([n,$('fc').value,'আজ',SG*a,SG>0?'arrow-down-left':'arrow-up-right']);saveT();drawW()}cl()}
+document.addEventListener('keydown',e=>{if(e.key=='Escape')cl();if(e.key=='Enter'&&$('md').classList.contains('on'))sub()});
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 drawTasks();drawW();
 </script>
 </body>

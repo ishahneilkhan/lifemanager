@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
 <meta id="tc" name="theme-color" content="#080f0d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <script>try{var t=localStorage.getItem("snk_theme")||(matchMedia("(prefers-color-scheme: light)").matches?"light":"dark");document.documentElement.dataset.theme=t;document.getElementById("tc").content=t=="light"?"#f3f6ef":"#080f0d"}catch(e){}</script>
@@ -133,6 +135,7 @@ const setB=()=>{const v=+prompt('মাসিক বাজেট লিখুন
 let tsign=1;const CI=['প্রজেক্ট আয়','বেতন','অন্যান্য আয়'],CE=['বাসস্থান','খাবার','ইউটিলিটি','শিক্ষা','যাতায়াত','অন্যান্য'];
 const addTx=g=>{tsign=g;$('mtt').textContent=g>0?'আয় যোগ করুন':'ব্যয় যোগ করুন';$('tc').innerHTML=(g>0?CI:CE).map(c=>`<option>${c}</option>`).join('');$('tn').value='';$('ta').value='';$('mt').classList.add('on')},clT=()=>$('mt').classList.remove('on');
 function subT(){const n=$('tn').value.trim(),a=Math.abs(+$('ta').value);if(!n||!a){(n?$('ta'):$('tn')).focus();return}T.unshift([n,$('tc').value,'আজ',tsign*a,tsign>0?'arrow-down-left':'arrow-up-right']);saveT();clT();render()}
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 render();
 </script>
 </body>
